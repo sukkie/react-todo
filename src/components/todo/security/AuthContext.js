@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { executeBasicAuthenticationService } from "../api/HelloWorldApiService";
 
 // 1. Create Context
 const AuthContext = createContext();
@@ -11,29 +12,56 @@ export default function AuthProvider({ children }) {
 
   const [username, setUsername] = useState(null);
 
+  const [token, setToken] = useState(null);
+
   // setInterval(() => setNumber(number + 1), 10000);
 
   const valueTobeShared = {
     isAuthenticated,
     username,
+    token,
     login,
     logout,
   };
 
-  function login(username, password) {
-    if (username !== "" && password === "1234") {
-      setUsername(username);
-      setAuthenticated(true);
-      return true;
-    } else {
-      setUsername(null);
-      setAuthenticated(false);
+  // function login(username, password) {
+  //   if (username !== "" && password === "1234") {
+  //     setUsername(username);
+  //     setAuthenticated(true);
+  //     return true;
+  //   } else {
+  //     setUsername(null);
+  //     setAuthenticated(false);
+  //     return false;
+  //   }
+  // }
+
+  async function login(username, password) {
+    const baToken = "Basic " + window.btoa(username + ":" + password);
+
+    try {
+      const response = await executeBasicAuthenticationService(baToken);
+
+      console.log(response.status);
+      if (response.status === 200) {
+        setUsername(username);
+        setAuthenticated(true);
+        setToken(baToken);
+        return true;
+      } else {
+        logout();
+        return false;
+      }
+    } catch (error) {
+      logout();
       return false;
     }
   }
 
   function logout() {
     setAuthenticated(false);
+    setUsername(null);
+    setToken(null);
   }
 
   return (

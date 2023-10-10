@@ -3,7 +3,7 @@ import { useAuth } from "./security/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginComponent() {
-  const [username, setUsername] = useState("in28minutes");
+  const [username, setUsername] = useState("oykwon");
   const [password, setPassword] = useState("");
 
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -22,8 +22,8 @@ export default function LoginComponent() {
     setPassword(event.target.value);
   }
 
-  function handleSubmit() {
-    if (authContext.login(username, password)) {
+  async function handleSubmit() {
+    if (await authContext.login(username, password)) {
       navigate(`/welcome/${username}`);
       // navigate("/welcome/" + username);
     } else {

@@ -18,7 +18,7 @@ export default function HeaderComponent() {
               className='navbar-brand ms-2 fs-2 fw-bold text-black'
               href='https://www.in28minutes.com'
             >
-              in28minutes
+              Test
             </a>
             <div className='collapse navbar-collapse'>
               <ul className='navbar-nav'>
