@@ -16,7 +16,7 @@ export default function WelcomeComponent() {
     //   .catch((error) => errorResponse(error))
     //   .finally(() => console.log("cleanup"));
 
-    retrieveHelloWorldPathVariable("oykwon", authContext.token)
+    retrieveHelloWorldPathVariable("oykwon")
       .then((response) => successfulResponse(response))
       .catch((error) => errorResponse(error))
       .finally(() => console.log("cleanup"));
